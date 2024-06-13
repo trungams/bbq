@@ -1,0 +1,19 @@
+env: development
+system:
+  log_level: info
+  parallelism: 1
+  scheduler:
+    queue:
+      size: 0
+      type: fifo
+    retry: 3
+    timeout: 1h
+  executor:
+    workspace: build/workspace
+    output: build/output
+tasks:
+  workspace: SOURCES
+  source: bbq.workflows.example
+  build_packages:
+
+
