@@ -17,13 +17,19 @@ config = dict()
 
 
 @app.command()
-def init(conf_file: Path = DEFAULT_CONFIG_FILE):
+def init(workflow_source: str = None, conf_file: Path = DEFAULT_CONFIG_FILE):
     with conf_file.open() as fp:
         config = yaml.safe_load(fp)
 
     # update a few values
+    if workflow_source:
+        config["tasks"]["source"] = workflow_source
+
     config["system"]["executor"]["workspace"] = str(
         Path(config["system"]["executor"]["workspace"]).absolute()
+    )
+    config["system"]["build_output_dir"] = str(
+        Path(config["system"]["build_output_dir"]).absolute()
     )
     config["tasks"]["workspace"] = str(Path(config["tasks"]["workspace"]).absolute())
 
@@ -31,18 +37,32 @@ def init(conf_file: Path = DEFAULT_CONFIG_FILE):
         yaml.safe_dump(config, fp)
 
     setup_logging(config)
-    logging.info("Creating scheduler...")
+
     scheduler = Scheduler(config)
+    scheduler.save()
+
+    logging.info("Build directory initialized")
+
+
+@app.command()
+def build():
+    logging.info("Creating scheduler...")
+    scheduler = Scheduler.load(config)
     scheduler.start()
+    scheduler.save()
 
 
 @app.command()
 def list():
-    pass
+    logging.info("loading scheduler from pickled data")
+    scheduler = Scheduler.load(config)
+    scheduler.debug()
+    scheduler.save()
 
 
 @app.command()
 def clean():
+    logging.info("Cleaning build directory...")
     shutil.rmtree(BUILD_DIR)
 
 

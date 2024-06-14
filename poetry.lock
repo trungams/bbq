@@ -462,6 +462,17 @@ files = [
 cli = ["click (>=5.0)"]
 
 [[package]]
+name = "python-rpm-spec"
+version = "0.15.0"
+description = "python-rpm-spec is a Python library for parsing RPM spec files."
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "python_rpm_spec-0.15.0-py3-none-any.whl", hash = "sha256:298d9e14c850462e64503925737e55013b3322b04a554d860131ae3b8cba85b8"},
+    {file = "python_rpm_spec-0.15.0.tar.gz", hash = "sha256:6ff7f0cd63059efe7cbc466431f70de485fc105ae8422321134d297dde9f3585"},
+]
+
+[[package]]
 name = "pywin32"
 version = "306"
 description = "Python for Window Extensions"
@@ -687,4 +698,4 @@ zstd = ["zstandard (>=0.18.0)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "26f5a117c6d6d707a571de70787c562588226fee62ff8c4d629c34aed39c92b5"
+content-hash = "9c9f79d293cd7f9d5fa6ca0d7e57b41352a9ae1b9ef341df5aa658da1f6c96b5"

@@ -10,8 +10,8 @@ class Task:
     def __init__(
         self,
         name: str,
-        task_input: Iterable[str],
-        task_output: Iterable[str],
+        task_input: Iterable[str] = None,
+        task_output: Iterable[str] = None,
         priority: float = 1.0,
     ) -> None:
         self.id: str = str(uuid4())
@@ -76,16 +76,13 @@ class Task:
         return other
 
     def __str__(self) -> str:
-        return f"<Task: id={self.id} name=({self.friendly_name})>"
+        return f"<Task: id={self.id} name=({self.friendly_name}) {self.status}>"
 
     def __repr__(self) -> str:
-        return f"<Task: id={self.id} name=({self.friendly_name})>"
+        return f"<Task: id={self.id} name=({self.friendly_name}) {self.status}>"
 
 
 class BuildCppTask(Task):
-    def __init__(self, *args, **kwargs) -> None:
-        super().__init__(*args, **kwargs)
-
     def execute(self) -> None:
         source_file = self.input[0]
         output_file = self.output[0]
@@ -93,18 +90,29 @@ class BuildCppTask(Task):
 
 
 class RunPythonTask(Task):
-    def __init__(self, *args, **kwargs) -> None:
-        super().__init__(*args, **kwargs)
-
     def execute(self) -> None:
         source_file = self.input[0]
         subprocess.run(["python3", source_file])
 
 
 class RunBashTask(Task):
-    def __init__(self, *args, **kwargs) -> None:
-        super().__init__(*args, **kwargs)
-
     def execute(self) -> None:
         source_file = self.input[0]
         subprocess.run(["bash", source_file])
+
+
+class EchoTask(Task):
+    def execute(self) -> None:
+        subprocess.run(["echo", self.friendly_name])
+
+
+class ParseSpecTask(Task):
+    pass
+
+
+class PackSrpmTask(Task):
+    pass
+
+
+class BuildRpmTask(Task):
+    pass

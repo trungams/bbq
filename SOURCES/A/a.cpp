@@ -1,6 +1,8 @@
 #include <iostream>
 
-int main(void) {
-  std::cout << "hello from A" << std::endl;
+int main(void)
+{
+  // dummy comment - hi
+  std::cout << "hello from A lowercase" << std::endl;
   return 0;
 }

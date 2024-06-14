@@ -10,7 +10,8 @@ system:
     timeout: 1h
   executor:
     workspace: build/workspace
-    output: build/output
+  build_output_dir: build/output
+  data_dir: .bbq
 tasks:
   workspace: SOURCES
   source: bbq.workflows.example
